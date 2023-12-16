@@ -1,0 +1,13 @@
+# Common
+.phpstorm.meta.php
+.DS_Store
+.ftpconfig
+.idea
+.vscode
+.fleet
+.env
+.env.*.php
+.env.php
+
+# Directories
+data
