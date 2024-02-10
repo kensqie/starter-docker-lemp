@@ -1,0 +1,61 @@
+version: "3"
+services:
+  app:
+    build:
+      args:
+        user: ${PROJECT}-user
+        uid: 1000
+      context: ./
+      dockerfile: Dockerfile
+    image: ${PROJECT}
+    container_name: ${PROJECT}-app
+    restart: unless-stopped
+    working_dir: /var/www/app
+    volumes:
+      - ./app:/var/www/app
+    networks:
+      - local
+
+  server:
+    image: nginx:stable
+    container_name: ${PROJECT}-server
+    restart: unless-stopped
+    volumes:
+      - ./app:/var/www/app
+      - ./config/nginx:/etc/nginx/conf.d/
+    ports:
+      - 9000:80
+    networks:
+      - local
+
+  db:
+    image: mariadb:11
+    container_name: ${PROJECT}-db
+    restart: unless-stopped
+    environment:
+      MARIADB_DATABASE: ${DB_DATABASE}
+      MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MARIADB_USER: ${DB_USERNAME}
+      MARIADB_PASSWORD: ${DB_PASSWORD}
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mariadb
+    volumes:
+      - ./config/mariadb:/docker-entrypoint-initdb.d
+      # Uncomment following line to save data from db
+      # - ./data/mariadb:/var/lib/mysql
+    networks:
+      - local
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: ${PROJECT}-pma
+    environment:
+      PMA_ARBITRARY: 1
+    ports:
+      - 9001:80
+    networks:
+      - local
+
+networks:
+  local:
+    driver: bridge
