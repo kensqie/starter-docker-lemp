@@ -14,6 +14,7 @@ services:
     working_dir: /var/www/app
     volumes:
       - ./app:/var/www/app
+      - ./config/php/:/usr/local/etc/php/
     networks:
       - local
 
