@@ -14,7 +14,7 @@ LEMP stack starter kit
 
 ### Set variables in `.env`
 
-```bash
+```sh
 cp .env.example .env
 ```
 
@@ -28,13 +28,13 @@ DB_ROOT_PASSWORD=011235
 
 ### Build `app` service
 
-```bash
+```sh
 docker compose build app
 ```
 
 ### Up all services
 
-```bash
+```sh
 docker compose up
 ```
 
@@ -45,7 +45,7 @@ docker compose up
 
 ### Open bash in app container
 
-```bash
+```sh
 docker exec -it <APP_CONTAINER_NAME> bash
 ```
 
