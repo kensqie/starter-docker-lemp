@@ -10,7 +10,7 @@ services:
       dockerfile: app.Dockerfile
     image: ${PROJECT}
     container_name: ${PROJECT}-app
-    restart: unless-stopped
+    restart: no
     working_dir: /var/www/app
     volumes:
       - ./app:/var/www/app
@@ -21,7 +21,7 @@ services:
   server:
     image: nginx:stable
     container_name: ${PROJECT}-server
-    restart: unless-stopped
+    restart: no
     volumes:
       - ./app:/var/www/app
       - ./config/nginx:/etc/nginx/conf.d/
@@ -33,7 +33,7 @@ services:
   db:
     image: mariadb:11
     container_name: ${PROJECT}-db
-    restart: unless-stopped
+    restart: no
     environment:
       MARIADB_DATABASE: ${DB_DATABASE}
       MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
@@ -50,6 +50,7 @@ services:
 
   phpmyadmin:
     image: phpmyadmin:latest
+    restart: no
     container_name: ${PROJECT}-pma
     environment:
       PMA_ARBITRARY: 1
